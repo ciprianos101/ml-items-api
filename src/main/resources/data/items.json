@@ -2,34 +2,78 @@
   {
     "id": "1",
     "title": "Smartphone 1",
-    "description": "A powerful smartphone.",
-    "price": 1999.99,
-    "currency": "BRL",
+    "condition": "NEW",
+    "universalCode": "7891234567890",
     "pictures": [
       "https://example.com/img1.jpg",
       "https://example.com/img2.jpg"
-    ]
+    ],
+    "stock": 10,
+    "sku": "SM1-001",
+    "description": "A powerful smartphone.",
+    "price": {
+      "amount": 1999.99,
+      "currency": "BRL"
+    },
+    "listingType": "CLASSIC",
+    "deliveryMethod": "FREE_SHIPPING",
+    "pickupAvailable": true,
+    "warranty": "FACTORY"
   },
   {
     "id": "2",
     "title": "Smartphone 2",
-    "description": "A powerful smartphone.",
-    "price": 1999.99,
-    "currency": "BRL",
-    "pictures": [
-      "https://example.com/img1.jpg",
-      "https://example.com/img2.jpg"
-    ]
+    "condition": "USED",
+    "universalCode": "7891234567891",
+    "pictures": [],
+    "stock": 0,
+    "sku": null,
+    "description": null,
+    "price": {
+      "amount": 999.99,
+      "currency": "BRL"
+    },
+    "listingType": "PREMIUM",
+    "deliveryMethod": "SELLER_PAYS",
+    "pickupAvailable": false,
+    "warranty": "SELLER"
   },
   {
     "id": "3",
     "title": "Smartphone 3",
-    "description": "A powerful smartphone.",
-    "price": 1999.99,
-    "currency": "BRL",
+    "condition": "REFURBISHED",
+    "universalCode": "7891234567892",
     "pictures": [
-      "https://example.com/img1.jpg",
-      "https://example.com/img2.jpg"
-    ]
+      "https://example.com/img3.jpg"
+    ],
+    "stock": 5,
+    "sku": "SM3-003",
+    "description": "Refurbished smartphone.",
+    "price": {
+      "amount": 1499.99,
+      "currency": "BRL"
+    },
+    "listingType": "CLASSIC",
+    "deliveryMethod": "TO_BE_ARRANGED",
+    "pickupAvailable": true,
+    "warranty": "NONE"
+  },
+  {
+    "id": "4",
+    "title": "Smartphone 4",
+    "condition": "NEW",
+    "universalCode": "7891234567893",
+    "pictures": [],
+    "stock": 20,
+    "sku": null,
+    "description": null,
+    "price": {
+      "amount": 2999.99,
+      "currency": "BRL"
+    },
+    "listingType": "PREMIUM",
+    "deliveryMethod": "FREE_SHIPPING",
+    "pickupAvailable": false,
+    "warranty": "FACTORY"
   }
 ]
