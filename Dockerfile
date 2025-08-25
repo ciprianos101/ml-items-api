@@ -5,7 +5,7 @@ COPY . .
 RUN ./gradlew clean bootJar --no-daemon
 
 # Etapa 2: Imagem final para execução
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
 

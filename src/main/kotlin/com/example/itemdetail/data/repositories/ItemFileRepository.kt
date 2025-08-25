@@ -1,4 +1,4 @@
-package com.example.itemdetail.adapter.persistence
+package com.example.itemdetail.data.repositories
 
 import com.example.itemdetail.domain.model.Item
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class ItemFileRepository {
-    fun getItems(): List<Item> {
+    private fun getItems(): List<Item> {
         val inputStream = javaClass.classLoader.getResourceAsStream("data/items.json")
             ?: throw IllegalStateException("Arquivo data/items.json não encontrado")
         return jacksonObjectMapper().readValue(inputStream)
