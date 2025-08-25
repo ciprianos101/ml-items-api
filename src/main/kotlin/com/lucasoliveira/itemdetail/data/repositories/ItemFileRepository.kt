@@ -13,5 +13,5 @@ class ItemFileRepository {
         return jacksonObjectMapper().readValue(inputStream)
     }
 
-    fun findById(id: String): Item? = getItems().find { it.id == id }
+    fun findById(id: String): Item? = getItems().find { it.id.toString() == id }
 }

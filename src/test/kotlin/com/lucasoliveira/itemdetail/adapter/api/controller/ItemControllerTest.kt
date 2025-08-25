@@ -1,5 +1,6 @@
 import com.lucasoliveira.itemdetail.ItemMockFactory
 import com.lucasoliveira.itemdetail.adapter.api.controller.ItemController
+import com.lucasoliveira.itemdetail.adapter.api.dto.toResponseDTO
 import com.lucasoliveira.itemdetail.domain.usecase.itemsdetails.port.ItemDetailsById
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
@@ -15,12 +16,12 @@ class ItemControllerTest {
     @Test
     fun `should return item when found`() = runBlocking {
         val item = ItemMockFactory.create()
-        `when`(itemDetailsById.run("1")).thenReturn(item)
+        `when`(itemDetailsById.run("3fe94906-02d3-4d16-8083-6da13889110d")).thenReturn(item)
 
-        val response = controller.getItem("1")
+        val response = controller.getItem("3fe94906-02d3-4d16-8083-6da13889110d")
 
-        assertEquals(HttpStatus.OK, response.statusCode)
-        assertEquals(item, response.body)
+        assertEquals(HttpStatus.OK, response?.statusCode)
+        assertEquals(item.toResponseDTO(), response?.body)
     }
 
     @Test
@@ -29,7 +30,7 @@ class ItemControllerTest {
 
         val response = controller.getItem("2")
 
-        assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
-        assertNull(response.body)
+        assertEquals(HttpStatus.NOT_FOUND, response?.statusCode)
+        assertNull(response?.body)
     }
 }

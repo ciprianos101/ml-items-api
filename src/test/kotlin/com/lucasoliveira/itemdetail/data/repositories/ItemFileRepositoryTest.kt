@@ -4,6 +4,7 @@ import com.lucasoliveira.itemdetail.ItemMockFactory
 import com.lucasoliveira.itemdetail.domain.model.Item
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.util.UUID
 
 class ItemFileRepositoryTest {
 
@@ -20,7 +21,7 @@ class ItemFileRepositoryTest {
         val repo = createRepoWithMockedItems()
 
         // Act
-        val result = repo.findById("1")
+        val result = repo.findById("3fe94906-02d3-4d16-8083-6da13889110d")
 
         // Assert
         assertNotNull(result)
@@ -33,7 +34,7 @@ class ItemFileRepositoryTest {
         val repo = createRepoWithMockedItems()
 
         // Act
-        val result = repo.findById("100")
+        val result = repo.findById(UUID.randomUUID().toString())
 
         // Assert
         assertNull(result)
