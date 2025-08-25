@@ -4,9 +4,10 @@ import com.lucasoliveira.itemdetail.domain.model.enums.Condition
 import com.lucasoliveira.itemdetail.domain.model.enums.DeliveryMethod
 import com.lucasoliveira.itemdetail.domain.model.enums.ListingType
 import com.lucasoliveira.itemdetail.domain.model.enums.Warranty
+import java.util.UUID
 
 data class Item(
-        val id: String,
+        val id: UUID,
         val title: String,
         val condition: Condition,
         val universalCode: String,

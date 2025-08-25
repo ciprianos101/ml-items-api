@@ -6,12 +6,13 @@ import com.lucasoliveira.itemdetail.domain.model.enums.Condition
 import com.lucasoliveira.itemdetail.domain.model.enums.DeliveryMethod
 import com.lucasoliveira.itemdetail.domain.model.enums.ListingType
 import com.lucasoliveira.itemdetail.domain.model.enums.Warranty
+import java.util.UUID
 
 object ItemMockFactory {
-    private var idCounter = 1
+    private var newId = UUID.randomUUID()
 
     fun create(
-        id: String = idCounter.toString(),
+        id: UUID = UUID.fromString("3fe94906-02d3-4d16-8083-6da13889110d"),
         title: String = "Mocked Item",
         condition: Condition = Condition.NEW,
         universalCode: String = "1234567890123",
@@ -40,7 +41,7 @@ object ItemMockFactory {
             pickupAvailable = pickupAvailable,
             warranty = warranty
         )
-        idCounter++
+        newId = UUID.randomUUID()
         return item
     }
 }

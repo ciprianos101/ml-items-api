@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "3fe94906-02d3-4d16-8083-6da13889110d",
     "title": "Smartphone 1",
     "condition": "NEW",
     "universalCode": "7891234567890",
@@ -21,7 +21,7 @@
     "warranty": "FACTORY"
   },
   {
-    "id": "2",
+    "id": "2d7a8e4b-c7da-49be-8e61-9f6312f4a1d0",
     "title": "Smartphone 2",
     "condition": "USED",
     "universalCode": "7891234567891",
@@ -39,7 +39,7 @@
     "warranty": "SELLER"
   },
   {
-    "id": "3",
+    "id": "8b1f4c92-3a6d-4fdf-b9e8-2e3ff12eec4e",
     "title": "Smartphone 3",
     "condition": "REFURBISHED",
     "universalCode": "7891234567892",
@@ -59,7 +59,7 @@
     "warranty": "NONE"
   },
   {
-    "id": "4",
+    "id": "9c34e408-7d13-482e-b83a-f2c064f69a5f",
     "title": "Smartphone 4",
     "condition": "NEW",
     "universalCode": "7891234567893",

@@ -1,4 +1,6 @@
 package com.lucasoliveira.itemdetail.adapter.api.controller
+import com.lucasoliveira.itemdetail.adapter.api.dto.ItemResponseDTO
+import com.lucasoliveira.itemdetail.adapter.api.dto.toResponseDTO
 import com.lucasoliveira.itemdetail.domain.model.Item
 import com.lucasoliveira.itemdetail.domain.usecase.itemsdetails.port.ItemDetailsById
 import org.springframework.http.ResponseEntity
@@ -13,9 +15,10 @@ class ItemController(
     private val itemDetailsById: ItemDetailsById
 ) {
     @GetMapping("/{id}")
-    suspend fun getItem(@PathVariable id: String): ResponseEntity<Item> =
+    suspend fun getItem(@PathVariable id: String): ResponseEntity<ItemResponseDTO?>? =
         try {
-            ResponseEntity.ok(itemDetailsById.run(id))
+            val item = itemDetailsById.run(id)
+            ResponseEntity.ok(item.toResponseDTO())
         } catch (e: NoSuchElementException) {
             ResponseEntity.notFound().build()
         }
