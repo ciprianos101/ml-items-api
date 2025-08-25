@@ -101,7 +101,7 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
 - Clean Architecture 
 
 Para facilitar futuras manutenções e garantir uma organização robusta, a aplicação foi estruturada seguindo 
-os princípios do Clean Architecture, separando claramente as responsabilidades em diferentes camadas.
+os princípios do Clean Architecture, separando as responsabilidades em diferentes camadas.
 
 No código, isso se reflete na existência de portas (ports) e interfaces, como a interface `ItemDao` (port) 
 utilizada pelo caso de uso `ItemDetailsByIdImpl`. Essa interface define um contrato para acesso aos dados, 
