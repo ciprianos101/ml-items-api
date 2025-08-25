@@ -1,7 +1,7 @@
-package com.lucasoliveira.itemdetail.adapter.api.controller
-
 import com.lucasoliveira.itemdetail.ItemMockFactory
+import com.lucasoliveira.itemdetail.adapter.api.controller.ItemController
 import com.lucasoliveira.itemdetail.domain.usecase.itemsdetails.port.ItemDetailsById
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
@@ -13,7 +13,7 @@ class ItemControllerTest {
     private val controller = ItemController(itemDetailsById)
 
     @Test
-    fun `should return item when found`() {
+    fun `should return item when found`() = runBlocking {
         val item = ItemMockFactory.create()
         `when`(itemDetailsById.run("1")).thenReturn(item)
 
@@ -24,7 +24,7 @@ class ItemControllerTest {
     }
 
     @Test
-    fun `should return 404 when item not found`() {
+    fun `should return 404 when item not found`() = runBlocking {
         `when`(itemDetailsById.run("2")).thenThrow(NoSuchElementException())
 
         val response = controller.getItem("2")

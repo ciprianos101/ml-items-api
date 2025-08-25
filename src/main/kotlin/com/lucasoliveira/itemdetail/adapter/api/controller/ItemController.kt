@@ -13,7 +13,7 @@ class ItemController(
     private val itemDetailsById: ItemDetailsById
 ) {
     @GetMapping("/{id}")
-    fun getItem(@PathVariable id: String): ResponseEntity<Item> =
+    suspend fun getItem(@PathVariable id: String): ResponseEntity<Item> =
         try {
             ResponseEntity.ok(itemDetailsById.run(id))
         } catch (e: NoSuchElementException) {
