@@ -46,3 +46,6 @@ Abaixo, segue uma tabela detalhada com os atributos mapeados, suas descrições 
 ## Sample Data
 
 See `src/main/resources/data/products.json`
+
+## Tecnologias utilizadas
+IntelliJ IDEA 2025.1.4.1 (Community Edition) e StackSpot

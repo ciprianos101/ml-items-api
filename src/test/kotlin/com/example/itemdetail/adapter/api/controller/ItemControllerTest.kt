@@ -1,6 +1,6 @@
-import com.example.itemdetail.adapter.api.controller.ItemController
-import com.example.itemdetail.adapter.api.controller.ItemMockFactory
-import com.example.itemdetail.domain.model.Item
+package com.example.itemdetail.adapter.api.controller
+
+import com.example.itemdetail.ItemMockFactory
 import com.example.itemdetail.domain.usecase.itemsdetails.port.ItemDetailsById
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
