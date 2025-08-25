@@ -11,6 +11,6 @@ class ItemDetailsByIdImpl(
     private val itemDao: ItemDao
 ) : ItemDetailsById{
         @Cacheable("jsonFileCache")
-        override fun run(id: String): Item =
+        override suspend fun run(id: String): Item =
             itemDao.byId(id) ?: throw NoSuchElementException("Item not found")
 }

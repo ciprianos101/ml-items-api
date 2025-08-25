@@ -140,6 +140,44 @@ Essa abordagem proporciona maior escalabilidade e eficiência, especialmente em 
 
 
 - Async endpoints (Kotlin coroutines)
+
+A API utiliza **endpoints assíncronos** com [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html), uma abordagem moderna para lidar com operações de I/O (como leitura de arquivos, chamadas HTTP, etc) de forma não bloqueante.
+
+### Por que usar endpoints assíncronos?
+
+- **Escalabilidade:**  
+  Em APIs tradicionais, cada requisição ocupa uma thread do servidor até que toda a operação termine (incluindo esperas por I/O). Com coroutines, a thread é liberada enquanto aguarda operações externas, permitindo que o servidor atenda muito mais requisições simultâneas com a mesma quantidade de recursos.
+
+- **Desempenho:**  
+  O uso de coroutines reduz o overhead de criação e troca de threads, tornando o processamento mais eficiente, especialmente sob alta carga.
+
+- **Simplicidade:**  
+  O código assíncrono com coroutines é escrito de forma sequencial, facilitando a leitura, manutenção e testes, sem a complexidade de callbacks ou programação reativa.
+
+### Exemplo prático
+
+No controller, o endpoint é declarado como `suspend`:
+
+```kotlin
+@GetMapping("/{id}")
+suspend fun getItem(@PathVariable id: String): ResponseEntity<Item> =
+    try {
+        ResponseEntity.ok(itemDetailsById.run(id))
+    } catch (e: NoSuchElementException) {
+        ResponseEntity.notFound().build()
+    }
+```
+
+Isso permite que toda a cadeia de execução (controller, usecase, DAO) seja não bloqueante, aproveitando ao máximo os recursos do servidor.
+
+### Benefícios em produção
+
+- **Menor consumo de memória e CPU** em cenários de alta concorrência.
+- **Respostas mais rápidas** sob carga, pois o servidor não fica preso esperando operações de I/O.
+- **Preparação para crescimento**: a aplicação está pronta para escalar horizontalmente e atender picos de acesso sem grandes mudanças na arquitetura.
+
+> Em resumo: endpoints assíncronos com Kotlin Coroutines tornam a API mais eficiente, escalável e fácil de manter.
+
 - Error handling with clear messages
 
 ## Sample Data
