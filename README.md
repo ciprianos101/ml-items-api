@@ -118,7 +118,27 @@ a evolução e manutenção do sistema.
 Essa abordagem garante que as regras de negócio permaneçam isoladas de detalhes de infraestrutura e frameworks, 
 tornando a aplicação mais flexível, testável e preparada para mudanças.
 
-- Persistence via local JSON file
+- Persistence via local JSON file  
+
+Como solicitado na descrição do projeto, neste primeiro momento utilizamos um arquivo JSON como base de dados para os itens.  
+Para garantir melhor performance e evitar leituras repetidas do arquivo a cada requisição, implementamos um mecanismo de cache utilizando a biblioteca [Caffeine](https://github.com/ben-manes/caffeine).
+
+O Caffeine é uma biblioteca de cache de alta performance para Java e Kotlin, amplamente utilizada em aplicações Spring Boot por sua eficiência e facilidade de configuração. Na aplicação, o cache foi configurado no arquivo `application.yml`:
+
+```yaml
+spring:
+  cache:
+    type: caffeine
+    cache-names: jsonFileCache
+  caffeine:
+    spec: maximumSize=100,expireAfterWrite=1m
+```
+
+O uso do cache pode ser observado no service `ItemDetailsByIdImpl`, onde o método responsável por buscar os detalhes do item é anotado com `@Cacheable("jsonFileCache")`. Isso garante que, ao buscar um item por ID, o resultado seja armazenado em memória e reutilizado em chamadas subsequentes dentro do tempo de expiração configurado (1 minuto), reduzindo o acesso ao arquivo e melhorando a resposta da API.
+
+Essa abordagem proporciona maior escalabilidade e eficiência, especialmente em cenários de alta demanda, sem comprometer a simplicidade da solução baseada em arquivo.
+
+
 - Async endpoints (Kotlin coroutines)
 - Error handling with clear messages
 
