@@ -11,7 +11,7 @@ import java.util.UUID
 class ItemDaoImpl(
     private val itemFileRepository: ItemFileRepository
 ) : ItemDao {
-    override fun byId(id: UUID): Item? {
+    override suspend fun byId(id: UUID): Item? {
         return itemFileRepository.findById(id)
     }
 }
