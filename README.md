@@ -9,7 +9,7 @@ Esta API foi desenvolvida para fornecer todos os detalhes relevantes de um item/
 
 Durante o processo de refinamento, analisamos produtos no site do Mercado Livre 
 e simulamos o cadastro de novos itens para identificar os campos essenciais. 
-O objetivo foi mapear todos os# Item Detail API
+O objetivo foi mapear todos os campos que o front irá precisar.
 
 API Backend que fornece detalhes sobre produtos, inspirado no Mercado Livre.
 
