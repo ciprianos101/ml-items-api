@@ -29,27 +29,6 @@ Abaixo, segue uma tabela detalhada com os atributos mapeados, suas descrições 
 
 ## Narrativa técnica
 
-## Escolha das Tecnologias
-
-O projeto foi desenvolvido utilizando Kotlin, Gradle e Spring Boot. A escolha dessas tecnologias foi motivada não apenas pelo meu conhecimento prévio, mas também por 
-suas características técnicas e benefícios para o desenvolvimento de APIs modernas:
-
-- **Kotlin**: Linguagem concisa, segura e interoperável com Java, proporcionando maior produtividade e menos propensão a erros. Sua sintaxe moderna facilita a manutenção e evolução do código.
-- **Spring Boot**: Framework robusto e amplamente adotado para construção de APIs REST, oferecendo rápida configuração, grande ecossistema de bibliotecas e suporte nativo a práticas como injeção de dependências, segurança e testes.
-- **Gradle**: Ferramenta de build flexível e eficiente, que simplifica o gerenciamento de dependências e automação de tarefas, acelerando o ciclo de desenvolvimento.
-
-Além da familiaridade, essas tecnologias foram escolhidas por sua maturidade, comunidade ativa, 
-documentação abrangente e facilidade de integração com ferramentas modernas de observabilidade, de IA generativa 
-e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
-
-
-> Esta estrutura garante que todas as informações essenciais estejam disponíveis para o frontend, proporcionando uma experiência completa e transparente ao cliente.
-## Endpoints
-
-- `GET /items/{id}`: Get detalhes do item por id.
-
-## Narrativa técnica
-
 ### Escolha das Tecnologias
 
 O projeto foi desenvolvido utilizando Kotlin, Gradle e Spring Boot. A escolha dessas tecnologias foi motivada não apenas pelo meu conhecimento prévio, mas também por 
