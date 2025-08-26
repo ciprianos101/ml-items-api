@@ -1,7 +1,7 @@
 package com.lucasoliveira.itemdetail.domain.usecase.itemsdetails
 
 import com.lucasoliveira.itemdetail.ItemMockFactory
-import com.lucasoliveira.itemdetail.domain.usecase.itemsdetails.port.ItemDao
+import com.lucasoliveira.itemdetail.domain.usecase.itemsdetails.port.ItemRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -11,20 +11,21 @@ import java.util.UUID
 
 class ItemDetailsByIdImplTest {
 
-    private val itemDao: ItemDao = mock(ItemDao::class.java)
-    private val itemDetailsById = ItemDetailsByIdImpl(itemDao)
+    private val itemRepository: ItemRepository = mock(ItemRepository::class.java)
+    private val itemDetailsById = ItemDetailsByIdImpl(itemRepository)
 
     @Test
     fun `should return item when found`() {
         runBlocking {
+
             val item = ItemMockFactory.create()
             val itemId = item.id
-            `when`(itemDao.byId(itemId)).thenReturn(item)
+            `when`(itemRepository.findById(itemId)).thenReturn(item)
 
             val result = itemDetailsById.run(itemId)
 
             assertEquals(item, result)
-            verify(itemDao).byId(itemId)
+            verify(itemRepository).findById(itemId)
         }
     }
 
@@ -32,14 +33,14 @@ class ItemDetailsByIdImplTest {
     fun `should throw NoSuchElementException when item not found`() {
         runBlocking {
             val itemId = UUID.randomUUID()
-            `when`(itemDao.byId(itemId)).thenReturn(null)
+            `when`(itemRepository.findById(itemId)).thenReturn(null)
 
             val exception = assertThrows<NoSuchElementException> {
                 itemDetailsById.run(itemId)
             }
 
             assertEquals("Item not found", exception.message)
-            verify(itemDao).byId(itemId)
+            verify(itemRepository).findById(itemId)
         }
     }
 }
