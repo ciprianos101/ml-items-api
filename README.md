@@ -221,7 +221,7 @@ Abaixo, segue uma tabela detalhada com os atributos mapeados, suas descrições 
 
 ## Narrativa técnica
 
-## Escolha das Tecnologias
+### Escolha das Tecnologias
 
 O projeto foi desenvolvido utilizando Kotlin, Gradle e Spring Boot. A escolha dessas tecnologias foi motivada não apenas pelo meu conhecimento prévio, mas também por 
 suas características técnicas e benefícios para o desenvolvimento de APIs modernas:
@@ -237,13 +237,13 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
 
 
 > Esta estrutura garante que todas as informações essenciais estejam disponíveis para o frontend, proporcionando uma experiência completa e transparente ao cliente.
-## Endpoints
+### Endpoints
 
 - `GET /items/{id}`: Get detalhes do item por id.
 
 ## Arquitetura
 
-## Estrutura de Pastas
+### Estrutura de Pastas
 
 ```
 ├── src/
@@ -289,7 +289,7 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
     │   └── resources/ # Recursos para testes
 ```
 
-- Clean Architecture 
+### Clean Architecture 
 
 Para facilitar futuras manutenções e garantir uma organização robusta, a aplicação foi estruturada seguindo 
 os princípios do Clean Architecture, separando as responsabilidades em diferentes camadas.
@@ -330,7 +330,7 @@ O uso do cache pode ser observado no service `ItemDetailsByIdImpl`, onde o méto
 Essa abordagem proporciona maior escalabilidade e eficiência, especialmente em cenários de alta demanda, sem comprometer a simplicidade da solução baseada em arquivo.
 
 
-- Async endpoints (Kotlin coroutines)
+### Async endpoints (Kotlin coroutines)
 
 A API utiliza **endpoints assíncronos** com [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html), uma abordagem moderna para lidar com operações de I/O (como leitura de arquivos, chamadas HTTP, etc) de forma não bloqueante.
 
@@ -351,12 +351,10 @@ No controller, o endpoint é declarado como `suspend`:
 
 ```kotlin
 @GetMapping("/{id}")
-suspend fun getItem(@PathVariable id: String): ResponseEntity<Item> =
-    try {
-        ResponseEntity.ok(itemDetailsById.run(id))
-    } catch (e: NoSuchElementException) {
-        ResponseEntity.notFound().build()
-    }
+suspend fun getItem(@PathVariable id: UUID): ResponseEntity<ItemResponseDTO?>?  {
+  val item = itemDetailsById.run(id)
+  return ResponseEntity.ok(item.toResponseDTO())
+}
 ```
 
 Isso permite que toda a cadeia de execução (controller, usecase, DAO) seja não bloqueante, aproveitando ao máximo os recursos do servidor.
@@ -369,22 +367,33 @@ Isso permite que toda a cadeia de execução (controller, usecase, DAO) seja nã
 
 > Em resumo: endpoints assíncronos com Kotlin Coroutines tornam a API mais eficiente, escalável e fácil de manter.
 
-- Segurança 
-Algumas medidas precisam ser tomadas para melhorar a segurança da aplicação
-  - Validação de entrada. Optamos por usar UUID no tipo de entrada, 
-  pois ele Evita enumeração fácil de produtos, melhorando a segurança, ele
-    ajuda na Escalabilidade pois  Facilita a integração com múltiplos sistemas e bancos 
-de dados distribuídos e é uma Boas prática, pois É padrão em APIs modernas,
-  especialmente públicas.
-- Utilização de DTO para resposta. Utilizamos o DTO para tratar a resposta
-_ Outras medidas de segurança, como CORS, Controle de Autenticação e Autorização e
-Rate Limiting optamos por não realizar nesse momento, 
-porém, caso a api vá para produção seria importante o desenvolvimento
-dessas funcionalidades
+## Segurança
 
+A segurança é um aspecto fundamental no desenvolvimento de APIs, especialmente quando expostas a aplicações frontend. No projeto, algumas medidas essenciais já foram implementadas, enquanto outras foram postergadas devido ao escopo atual. Abaixo, detalhamos as principais decisões:
+
+- **Validação de entrada**
+  - Todos os endpoints que recebem identificadores de itens utilizam o tipo `UUID`. Essa escolha:
+    - **Previne enumeração fácil de produtos**, dificultando ataques de enumeração sequencial.
+    - **Facilita a integração** com múltiplos sistemas e bancos de dados distribuídos.
+    - **Segue boas práticas** de APIs modernas, especialmente públicas, ao evitar exposição de IDs previsíveis.
+  - Além disso, são aplicadas validações automáticas nos DTOs de entrada, reduzindo o risco de dados malformados ou maliciosos.
+
+- **Utilização de DTOs para resposta**
+  - As respostas da API são encapsuladas em DTOs (Data Transfer Objects), expondo apenas os campos necessários ao consumidor. Isso evita vazamento de informações sensíveis ou detalhes internos da aplicação.
+
+- **Tratamento de erros**
+  - A API retorna mensagens de erro claras e status HTTP apropriados para cada situação, evitando exposição de stacktraces ou detalhes internos do sistema.
+
+- **Medidas não implementadas neste momento**
+  - **CORS (Cross-Origin Resource Sharing):** Não foi configurado explicitamente, pois a API está restrita a ambientes controlados. Para produção, recomenda-se definir políticas de CORS adequadas para evitar acessos indevidos de domínios não autorizados.
+  - **Autenticação e Autorização:** Não foram implementadas, já que o objetivo atual é fornecer dados de catálogo sem restrição. Em ambientes produtivos, é fundamental proteger os endpoints com mecanismos como OAuth2, JWT ou integração com provedores de identidade.
+  - **Rate Limiting:** Não foi aplicado, pois a API não está exposta publicamente. Em produção, recomenda-se limitar o número de requisições por IP/usuário para evitar abusos e ataques de negação de serviço (DoS).
+
+> **Resumo:**  
+> O projeto já adota práticas de segurança para o contexto atual, priorizando validação de entrada e encapsulamento de dados. Caso a API seja disponibilizada em ambiente produtivo ou exposta publicamente, recomenda-se fortemente a implementação de CORS, autenticação/autorização e rate limiting para garantir a proteção dos dados e dos usuários.
 ## Sample Data
 
-See `src/main/resources/data/items.json`
+Veja a base de dados utilizada em `src/main/resources/data/items.json`
 
-## Tecnologias utilizadas
-IntelliJ IDEA 2025.1.4.1 (Community Edition) e StackSpot
+## Tecnologias utilizadas para auxiliar o desenvolvimento
+IntelliJ IDEA 2025.1.4.1 (Community Edition) e StackSpot AI

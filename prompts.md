@@ -7,3 +7,10 @@
  para ler e armazenar as informações sobre os itens.
 
  ```
+
+
+Os teste unitátios foram criados utilizando o StackSpot AI.
+
+O código foi todo revisado utilizando Stackspot AI. 
+
+Toda a documentação foi revisada e complementada utilizando StackSpot AI
