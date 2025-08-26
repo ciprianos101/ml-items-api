@@ -14,7 +14,7 @@ Para iniciar a aplicação localmente, execute o comando abaixo no terminal, na 
 ./gradlew bootRun
 ```
 
-A aplicação será iniciada em modo de desenvolvimento, normalmente acessível em [http://localhost:8080](http://localhost:8080).
+A aplicação será iniciada em modo de desenvolvimento, acessível em [http://localhost:8080](http://localhost:8080).
 
 ### Rodando os Testes
 
@@ -55,7 +55,6 @@ A aplicação estará disponível em [http://localhost:8080](http://localhost:80
 
 - Certifique-se de que a porta 8080 esteja livre em sua máquina.
 - O arquivo de configuração e os dados dos itens estão incluídos na imagem Docker.
-- Para customizações, edite os arquivos em `src/main/resources` antes de gerar a imagem.
 
 ---
 
