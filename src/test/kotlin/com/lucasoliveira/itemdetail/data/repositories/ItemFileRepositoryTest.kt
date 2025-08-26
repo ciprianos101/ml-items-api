@@ -21,7 +21,7 @@ class ItemFileRepositoryTest {
         val repo = createRepoWithMockedItems()
 
         // Act
-        val result = repo.findById("3fe94906-02d3-4d16-8083-6da13889110d")
+        val result = repo.findById(UUID.fromString("3fe94906-02d3-4d16-8083-6da13889110d"))
 
         // Assert
         assertNotNull(result)
@@ -34,7 +34,7 @@ class ItemFileRepositoryTest {
         val repo = createRepoWithMockedItems()
 
         // Act
-        val result = repo.findById(UUID.randomUUID().toString())
+        val result = repo.findById(UUID.randomUUID())
 
         // Assert
         assertNull(result)

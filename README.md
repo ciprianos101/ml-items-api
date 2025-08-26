@@ -70,8 +70,12 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
     │   ├── main/
     │   │   ├── kotlin/
     │   │   │   ├── com.lucasoliveira.itemdetail/
-    │   │   │   │   ├── adapter.api.controller/ # Controllers (camada de entrada da API)
-    │   │   │   │   │   └── ItemController.kt # Controller principal dos endpoints de item
+    │   │   │   │   ├── adapter.api
+    │   │   │   │   │  └──controller/ # Controllers (camada de entrada da API)
+    │   │   │   │   │     └── ItemController.kt # Controller principal dos endpoints de item
+    │   │   │   │   │  └──dto/ # DTO
+    │   │   │   │   │     └── ItemResponseDTO.kt # DTO que retornado pelo controller
+    │   │   │   │   │     └── mapper.kt #Map entre o dominio e os dtos
     │   │   │   │   ├── data/ # Camada de acesso a dados
     │   │   │   │   │   ├── daos/
     │   │   │   │   │   │   └── ItemDaoImpl.kt # Implementação do DAO de itens
@@ -365,7 +369,18 @@ Isso permite que toda a cadeia de execução (controller, usecase, DAO) seja nã
 
 > Em resumo: endpoints assíncronos com Kotlin Coroutines tornam a API mais eficiente, escalável e fácil de manter.
 
-- Error handling with clear messages
+- Segurança 
+Algumas medidas precisam ser tomadas para melhorar a segurança da aplicação
+  - Validação de entrada. Optamos por usar UUID no tipo de entrada, 
+  pois ele Evita enumeração fácil de produtos, melhorando a segurança, ele
+    ajuda na Escalabilidade pois  Facilita a integração com múltiplos sistemas e bancos 
+de dados distribuídos e é uma Boas prática, pois É padrão em APIs modernas,
+  especialmente públicas.
+- Utilização de DTO para resposta. Utilizamos o DTO para tratar a resposta
+_ Outras medidas de segurança, como CORS, Controle de Autenticação e Autorização e
+Rate Limiting optamos por não realizar nesse momento, 
+porém, caso a api vá para produção seria importante o desenvolvimento
+dessas funcionalidades
 
 ## Sample Data
 

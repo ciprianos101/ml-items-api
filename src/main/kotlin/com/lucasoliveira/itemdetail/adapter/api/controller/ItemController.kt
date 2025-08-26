@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @RestController
 @RequestMapping("items")
@@ -15,11 +16,8 @@ class ItemController(
     private val itemDetailsById: ItemDetailsById
 ) {
     @GetMapping("/{id}")
-    suspend fun getItem(@PathVariable id: String): ResponseEntity<ItemResponseDTO?>? =
-        try {
-            val item = itemDetailsById.run(id)
-            ResponseEntity.ok(item.toResponseDTO())
-        } catch (e: NoSuchElementException) {
-            ResponseEntity.notFound().build()
-        }
+    suspend fun getItem(@PathVariable id: UUID): ResponseEntity<ItemResponseDTO?>?  {
+        val item = itemDetailsById.run(id)
+        return ResponseEntity.ok(item.toResponseDTO())
+    }
 }
