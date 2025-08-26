@@ -5,15 +5,15 @@ import com.lucasoliveira.itemdetail.domain.model.Item
 fun Item.toResponseDTO() = ItemResponseDTO(
     id = this.id,
     title = this.title,
-    condition = this.condition,
+    condition = this.condition.toString(),
     universalCode = this.universalCode,
     photos = this.pictures,
     stock = this.stock,
     sku = this.sku,
     description = this.description,
     price = this.price,
-    listingType = this.listingType,
-    deliveryType = this.deliveryMethod,
+    listingType = this.listingType.toString(),
+    deliveryType = this.deliveryMethod.toString(),
     pickupAvailable = this.pickupAvailable,
-    warranty = this.warranty
+    warranty = this.warranty.name
 )

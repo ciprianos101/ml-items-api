@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.*
+import java.util.UUID
 
 class ItemDetailsByIdImplTest {
 
@@ -16,8 +17,8 @@ class ItemDetailsByIdImplTest {
     @Test
     fun `should return item when found`() {
         runBlocking {
-            val itemId = "123"
             val item = ItemMockFactory.create()
+            val itemId = item.id
             `when`(itemDao.byId(itemId)).thenReturn(item)
 
             val result = itemDetailsById.run(itemId)
@@ -30,7 +31,7 @@ class ItemDetailsByIdImplTest {
     @Test
     fun `should throw NoSuchElementException when item not found`() {
         runBlocking {
-            val itemId = "not_found"
+            val itemId = UUID.randomUUID()
             `when`(itemDao.byId(itemId)).thenReturn(null)
 
             val exception = assertThrows<NoSuchElementException> {

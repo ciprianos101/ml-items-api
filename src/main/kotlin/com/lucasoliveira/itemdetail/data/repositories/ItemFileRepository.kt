@@ -4,6 +4,7 @@ import com.lucasoliveira.itemdetail.domain.model.Item
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.stereotype.Repository
+import java.util.UUID
 
 @Repository
 class ItemFileRepository {
@@ -13,5 +14,5 @@ class ItemFileRepository {
         return jacksonObjectMapper().readValue(inputStream)
     }
 
-    fun findById(id: String): Item? = getItems().find { it.id.toString() == id }
+    fun findById(id: UUID): Item? = getItems().find { it.id == id }
 }
