@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Repository
 class ItemFileRepository : ItemRepository {
-    private val filePath = "src/main/resources/data/items.json"
+    private val filePath = System.getenv("ITEMS_JSON_PATH") ?: "src/main/resources/data/items.json"
     @Volatile private var lastModified: Long = 0
     @Volatile private var itemsById: Map<UUID, Item> = emptyMap()
 
