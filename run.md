@@ -23,6 +23,12 @@ Para executar todos os testes automatizados do projeto, utilize:
 ```bash
 ./gradlew test
 ```
+Para rodar todos os testes do cucumber:
+
+```bash
+./gradlew cucumber
+```
+
 
 ---
 
@@ -43,21 +49,6 @@ Se preferir rodar a aplicação em um container Docker, siga os passos abaixo:
    ```
 
 A aplicação estará disponível em [http://localhost:8080](http://localhost:8080).
-
-## Como executar os testes
-
-Para rodar todos os testes unitários rode:
-
-```bash
-./gradlew test
-```
-
-Para rodar todos os testes do cucumber:
-
-```bash
-./gradlew cucumber
-```
-
 
 
 ## Observações
