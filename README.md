@@ -250,11 +250,15 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
     │   ├── main/
     │   │   ├── kotlin/
     │   │   │   ├── com.lucasoliveira.itemdetail/
-    │   │   │   │   ├── adapter.api.controller/ # Controllers (camada de entrada da API)
-    │   │   │   │   │   └── ItemController.kt # Controller principal dos endpoints de item
+    │   │   │   │   ├── adapter.api
+    │   │   │   │   │   ├──controller # Controllers (camada de entrada da API)
+    │   │   │   │   │     └── ItemController.kt # Controller principal dos endpoints de item
+    │   │   │   │   │   ├──dto/
+    │   │   │   │   │     └── ItemResponseDTO.kt 
+    │   │   │   │   │     └── mapper.kt 
+    │   │   │   │   │   ├──exception
+    │   │   │   │   │     └── ExceptionHandler.kt # controle de exceções
     │   │   │   │   ├── data/ # Camada de acesso a dados
-    │   │   │   │   │   ├── daos/
-    │   │   │   │   │   │   └── ItemDaoImpl.kt # Implementação do DAO de itens
     │   │   │   │   │   ├── repositories/
     │   │   │   │   │   │   └── ItemFileRepository.kt # Repositório que lê/escreve itens do arquivo JSON
     │   │   │   │   ├── domain/ # Entidades e regras de negócio
@@ -268,7 +272,7 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
     │   │   │   │   │   │   └── Price.kt # Classe de valor para preço
     │   │   │   │   │   ├── usecase.itemsdetails/
     │   │   │   │   │   │   ├── port/
-    │   │   │   │   │   │   │   └── ItemDao.kt # Interface do DAO de itens
+    │   │   │   │   │   │   │   └── ItemRepository.kt # Interface do Repository de itens
     │   │   │   │   │   │   │   └── ItemDetailsById.kt # Caso de uso para buscar detalhes por ID
     │   │   │   │   │   │   └── ItemDetailsByIdImpl.kt# Implementação do caso de uso
     │   │   │   └── ItemDetailApiApplication.kt # Classe principal (entrypoint Spring Boot)
@@ -281,6 +285,10 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
     │   │   │   ├── com.lucasoliveira.itemdetail/
     │   │   │   │   ├── adapter.api.controller/
     │   │   │   │   │   └── ItemControllerTest.kt # Testes do controller
+    │   │   │   │   ├── adapter.api.exception/    
+    │   │   │   │   │   └── ExceptionHandlerTest.kt 
+    │   │   │   │   ├── cucumber
+    │   │   │   │   │   └── ItemSteps.kt   # implementação testes cucumber
     │   │   │   │   ├── data.repositories/
     │   │   │   │   │   └── ItemFileRepositoryTest.kt # Testes do repositório de arquivos
     │   │   │   │   ├── domain.usecase.itemsdetails/
@@ -312,23 +320,25 @@ tornando a aplicação mais flexível, testável e preparada para mudanças.
 ### Persistence via local JSON file  
 
 Como solicitado na descrição do projeto, neste primeiro momento utilizamos um arquivo JSON como base de dados para os itens.  
-Para garantir melhor performance e evitar leituras repetidas do arquivo a cada requisição, implementamos um mecanismo de cache utilizando a biblioteca [Caffeine](https://github.com/ben-manes/caffeine).
 
-O Caffeine é uma biblioteca de cache de alta performance para Java e Kotlin, amplamente utilizada em aplicações Spring Boot por sua eficiência e facilidade de configuração. Na aplicação, o cache foi configurado no arquivo `application.yml`:
+### Estrutura de Dados e Performance
 
-```yaml
-spring:
-  cache:
-    type: caffeine
-    cache-names: jsonFileCache
-  caffeine:
-    spec: maximumSize=100,expireAfterWrite=1m
-```
+Para garantir alta performance e atualização automática dos dados ao utilizar um arquivo JSON como "banco de dados", optamos por carregar os itens em memória e indexá-los em um `HashMap` (Kotlin: `Map<UUID, Item>`). Essa decisão foi motivada pelos seguintes fatores:
 
-O uso do cache pode ser observado no service `ItemDetailsByIdImpl`, onde o método responsável por buscar os detalhes do item é anotado com `@Cacheable("jsonFileCache")`. Isso garante que, ao buscar um item por ID, o resultado seja armazenado em memória e reutilizado em chamadas subsequentes dentro do tempo de expiração configurado (1 minuto), reduzindo o acesso ao arquivo e melhorando a resposta da API.
+- **Performance de busca:**  
+  Em uma abordagem ingênua, seria necessário ler e desserializar o arquivo JSON a cada requisição, realizando uma busca linear (O(N)) para encontrar o item pelo ID. Isso significa que, quanto maior o número de itens, mais lenta seria a resposta da API.
 
-Essa abordagem proporciona maior escalabilidade e eficiência, especialmente em cenários de alta demanda, sem comprometer a simplicidade da solução baseada em arquivo.
+- **Acesso em tempo constante:**  
+  Ao carregar os itens em memória e indexá-los por ID usando um `HashMap`, a busca por um item específico passa a ser feita em tempo constante (O(1)). Ou seja, o tempo de resposta não depende do número de itens cadastrados, garantindo escalabilidade mesmo com grandes volumes de dados.
 
+- **Atualização automática:**  
+  O repositório monitora o timestamp de modificação do arquivo. Sempre que o arquivo é alterado, ele é recarregado e o índice em memória é atualizado automaticamente, refletindo as mudanças sem necessidade de reiniciar a aplicação.
+
+#### Resumo das complexidades:
+- **Busca linear (O(N))**: ler o arquivo e procurar item por item (ineficiente para grandes arquivos).
+- **Busca indexada (O(1))**: acesso direto ao item via `HashMap`, extremamente eficiente.
+
+Essa estratégia proporciona uma API responsiva, eficiente e preparada para crescer conforme a demanda, sem abrir mão da simplicidade de utilizar um arquivo como fonte de dados.
 
 ### Async endpoints (Kotlin coroutines)
 

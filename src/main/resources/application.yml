@@ -4,8 +4,3 @@ spring:
   web:
     resources:
       add-mappings: false
-  cache:
-    type: caffeine
-    cache-names: jsonFileCache
-    caffeine:
-      spec: maximumSize=100,expireAfterWrite=1m

@@ -3,7 +3,6 @@ package com.lucasoliveira.itemdetail.domain.usecase.itemsdetails
 import com.lucasoliveira.itemdetail.domain.model.Item
 import com.lucasoliveira.itemdetail.domain.usecase.itemsdetails.port.ItemRepository
 import com.lucasoliveira.itemdetail.domain.usecase.itemsdetails.port.ItemDetailsById
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -11,7 +10,6 @@ import java.util.UUID
 class ItemDetailsByIdImpl(
     private val itemRepository : ItemRepository
 ) : ItemDetailsById{
-        @Cacheable("jsonFileCache")
         override suspend fun run(id: UUID): Item =
             itemRepository.findById(id) ?: throw NoSuchElementException("Item not found")
 }
