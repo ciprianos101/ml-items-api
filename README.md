@@ -77,8 +77,6 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
     │   │   │   │   │     └── ItemResponseDTO.kt # DTO que retornado pelo controller
     │   │   │   │   │     └── mapper.kt #Map entre o dominio e os dtos
     │   │   │   │   ├── data/ # Camada de acesso a dados
-    │   │   │   │   │   ├── daos/
-    │   │   │   │   │   │   └── ItemDaoImpl.kt # Implementação do DAO de itens
     │   │   │   │   │   ├── repositories/
     │   │   │   │   │   │   └── ItemFileRepository.kt # Repositório que lê/escreve itens do arquivo JSON
     │   │   │   │   ├── domain/ # Entidades e regras de negócio
@@ -92,7 +90,7 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
     │   │   │   │   │   │   └── Price.kt # Classe de valor para preço
     │   │   │   │   │   ├── usecase.itemsdetails/
     │   │   │   │   │   │   ├── port/
-    │   │   │   │   │   │   │   └── ItemDao.kt # Interface do DAO de itens
+    │   │   │   │   │   │   │   └── ItemRepository.kt # Interface do Repository de itens
     │   │   │   │   │   │   │   └── ItemDetailsById.kt # Caso de uso para buscar detalhes por ID
     │   │   │   │   │   │   └── ItemDetailsByIdImpl.kt# Implementação do caso de uso
     │   │   │   └── ItemDetailApiApplication.kt # Classe principal (entrypoint Spring Boot)
@@ -118,9 +116,9 @@ e deploy, garantindo escalabilidade, correção de erros e qualidade ao projeto.
 Para facilitar futuras manutenções e garantir uma organização robusta, a aplicação foi estruturada seguindo 
 os princípios do Clean Architecture, separando as responsabilidades em diferentes camadas.
 
-No código, isso se reflete na existência de portas (ports) e interfaces, como a interface `ItemDao` (port) 
+No código, isso se reflete na existência de portas (ports) e interfaces, como a interface `ItemRepository` (port) 
 utilizada pelo caso de uso `ItemDetailsByIdImpl`. Essa interface define um contrato para acesso aos dados, 
-sendo implementada na camada de infraestrutura (data) pela classe `ItemDaoImpl`. 
+sendo implementada na camada de infraestrutura (data) pela classe `ItemFileRepository`. 
 Dessa forma, caso seja necessário alterar a fonte de dados no futuro 
 (por exemplo, migrar de um arquivo JSON para um banco de dados), basta criar uma nova implementação da interface, 
 sem impactar as regras de negócio.
