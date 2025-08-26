@@ -309,7 +309,7 @@ a evolução e manutenção do sistema.
 Essa abordagem garante que as regras de negócio permaneçam isoladas de detalhes de infraestrutura e frameworks, 
 tornando a aplicação mais flexível, testável e preparada para mudanças.
 
-- Persistence via local JSON file  
+### Persistence via local JSON file  
 
 Como solicitado na descrição do projeto, neste primeiro momento utilizamos um arquivo JSON como base de dados para os itens.  
 Para garantir melhor performance e evitar leituras repetidas do arquivo a cada requisição, implementamos um mecanismo de cache utilizando a biblioteca [Caffeine](https://github.com/ben-manes/caffeine).
@@ -391,6 +391,42 @@ A segurança é um aspecto fundamental no desenvolvimento de APIs, especialmente
 
 > **Resumo:**  
 > O projeto já adota práticas de segurança para o contexto atual, priorizando validação de entrada e encapsulamento de dados. Caso a API seja disponibilizada em ambiente produtivo ou exposta publicamente, recomenda-se fortemente a implementação de CORS, autenticação/autorização e rate limiting para garantir a proteção dos dados e dos usuários.
+
+## Testes
+
+A qualidade e a confiabilidade da API são garantidas por uma combinação de testes unitários e testes funcionais automatizados.
+
+- **Testes unitários:** Validam o comportamento isolado de componentes e regras de negócio, garantindo que cada parte do sistema funcione corretamente de forma independente.
+
+- **Testes funcionais com Cucumber:**  
+  Utilizamos o [Cucumber](https://cucumber.io/), uma ferramenta de BDD (Behavior-Driven Development), para descrever e automatizar cenários de uso da API em uma linguagem próxima do negócio (Gherkin). Isso facilita a comunicação entre desenvolvedores, QA e stakeholders, além de garantir que a API se comporte conforme o esperado em situações reais de uso.
+
+  Os cenários de teste cobrem casos como:
+  - Consulta de item existente
+  - Item não encontrado
+  - Validação de UUID inválido
+  - Requisições para endpoints inexistentes
+
+  Os arquivos `.feature` com os cenários podem ser encontrados em:  
+  `src/test/resources/features`
+
+### Como executar os testes
+
+Para rodar todos os testes unitários rode:
+
+```bash
+./gradlew test
+```
+
+Para rodar todos os testes do cucumber:
+
+```bash
+./gradlew cucumber
+```
+
+
+> A adoção do Cucumber permite que a documentação dos requisitos e os testes estejam sempre alinhados, promovendo maior confiança na evolução do sistema.
+
 ## Sample Data
 
 Veja a base de dados utilizada em `src/main/resources/data/items.json`

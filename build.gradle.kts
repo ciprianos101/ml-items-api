@@ -32,7 +32,33 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+    //cucumber
+    testImplementation("io.cucumber:cucumber-java:7.11.2")
+    testImplementation("io.cucumber:cucumber-junit:7.11.2")
+    testImplementation("io.cucumber:cucumber-spring:7.11.2")
+    testImplementation("org.junit.vintage:junit-vintage-engine:5.9.3")
 }
 tasks.test {
     useJUnitPlatform()
+}
+
+configurations {
+    create("cucumberRuntime") {
+        extendsFrom(configurations["testImplementation"])
+    }
+}
+
+tasks.register<JavaExec>("cucumber") {
+    dependsOn("assemble", "testClasses")
+    mainClass.set("io.cucumber.core.cli.Main")
+    classpath = sourceSets["main"].runtimeClasspath +
+            sourceSets["test"].runtimeClasspath +
+            configurations["cucumberRuntime"]
+    args = listOf(
+        "--plugin", "pretty",
+        "--glue", "com.lucasoliveira.itemdetail.cucumber",
+        "src/test/resources/features",
+        "--plugin", "json:${buildDir}/results/cucumber/cucumber.json"
+    )
 }

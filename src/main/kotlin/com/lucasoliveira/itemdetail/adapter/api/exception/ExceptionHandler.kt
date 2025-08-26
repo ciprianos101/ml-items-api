@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import org.springframework.web.servlet.NoHandlerFoundException
 
 @ControllerAdvice
 class ExceptionHandler {
@@ -24,11 +25,16 @@ class ExceptionHandler {
         ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse("O parâmetro '${ex.name}' deve ser um UUID válido"))
 
+    @ExceptionHandler(NoHandlerFoundException::class)
+    fun handleNotFoundHandler(ex: NoHandlerFoundException): ResponseEntity<ErrorResponse> =
+        ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(ErrorResponse("Endpoint não encontrado"))
 
     @ExceptionHandler(Exception::class)
     fun handleGeneric(ex: Exception): ResponseEntity<ErrorResponse> =
         ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse("Erro interno inesperado"))
+
 }
 
 data class ErrorResponse(
