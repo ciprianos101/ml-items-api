@@ -4,5 +4,5 @@ import com.lucasoliveira.itemdetail.domain.model.Item
 import java.util.UUID
 
 interface ItemDao {
-    fun byId(id: UUID): Item?
+    suspend fun byId(id: UUID): Item?
 }
