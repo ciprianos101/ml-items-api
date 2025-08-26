@@ -2,18 +2,6 @@
 
 API Backend que fornece detalhes sobre produtos, inspirado no Mercado Livre.
 
-
-## Narrativa de Negócio
-
-Esta API foi desenvolvida para fornecer todos os detalhes relevantes de um item/produto, permitindo que o frontend exiba ao cliente todas as informações necessárias para a tomada de decisão de compra.
-
-Durante o processo de refinamento, analisamos produtos no site do Mercado Livre 
-e simulamos o cadastro de novos itens para identificar os campos essenciais. 
-O objetivo foi mapear todos os# Item Detail API
-
-API Backend que fornece detalhes sobre produtos, inspirado no Mercado Livre.
-
-
 ## Narrativa de Negócio
 
 Esta API foi desenvolvida para fornecer todos os detalhes relevantes de um item/produto, permitindo que o frontend exiba ao cliente todas as informações necessárias para a tomada de decisão de compra.
